@@ -2,8 +2,6 @@ FROM archlinux:base-devel
 LABEL maintainer="bthaleproductions@gmail.com"
 
 # Consider also making a branch of my install-cm-incudine.sh script to be used in the Dockerfile with what I need. Comment out the parts I don't need.
-# Look here https://codefresh.io/Docker-Tutorial/build-docker-image-dockerfiles/ for more info on Dockerfiles
-# The notes from Tweeks is very helpful for building and testing
 
 # Variables to be used in the script
 ENV QUICKLISP_DIR=/root/quicklisp/local-projects
