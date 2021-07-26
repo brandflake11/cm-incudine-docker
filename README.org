@@ -1,0 +1,28 @@
+* What is this?
+
+  This dockerfile gives you a container environment for [[https://github.com/ormf/cm-incudine][cm-incudine]]. This dockerfile gives you the full [[http://incudine.sourceforge.net/][incudine]], [[https://github.com/ormf/cm][cm2]] (based on Common Lisp), and [[http://www.sbcl.org/][sbcl]]. It includes all dependencies to generate lilypond scores, midi files, and audio. You can use this to render these files on the go with any Linux computer running docker or on a high performance computing environment without having to setup anything but the docker image. This uses Arch Linux as the base, as it is partly based off of my [[https://github.com/brandflake11/install-cm-incudine][install-cm-incudine]] script for Arch-based distros. The dockerfile uses some of my components from that. If you would like to install a cm-incudine environment on your own Arch Linux-based distro, see that repository instead. The image itself is about 1.13GB in size.
+
+* Building the dockerfile
+
+  Make sure you have the docker daemon running. Then, using a shell, ~cd~ into the directory of the dockerfile. After that, build the image using ~docker build -t cm-incudine --rm .~ . Included below is a full bash excerpt of how to do this:
+#+BEGIN_SRC bash
+  git clone https://github.com/brandflake11/install-cm-incudine.git
+  cd install-cm-incudine
+  build -t cm-incudine --rm .
+#+END_SRC
+
+* Running and mounting your own folders in the docker image
+
+  When running the image, make sure you mount a directory to be used for writing files out of the container. Use a command like this:
+
+#+BEGIN_SRC bash
+  mkdir /tmp/docker && docker run -ti -v /tmp/docker:/root/output cm-incudine
+#+END_SRC
+
+/root in the image also contains the necessary files for launching cm-incudine directly from sbcl. Make sure not to mount your folder to /root, as it will then require you to load everything for cm-incudine manually.
+
+* Copyrights
+
+  I am not the creator of incudine, cm-incudine, or cm. Those belong to their respective owners. Look at the links in the *What is this?* header to find the source code repositories of all of them. I am only the creator of this dockerfile.
+
+  This dockerfile is licensed under the GPLv3, and I assume no responsibility for anything that happens if you use this dockerfile. Use at your own risk.
