@@ -21,6 +21,10 @@
 
 /root in the image also contains the necessary files for launching cm-incudine directly from sbcl. Make sure not to mount your folder to /root, as it will then require you to load everything for cm-incudine manually.
 
+* Todo
+
+ I still need to upload the image directly to dockerhub, so one can just pull it. Once that happens, I will update this ~README~.
+
 * Copyrights
 
   I am not the creator of incudine, cm-incudine, or cm. Those belong to their respective owners. Look at the links in the *What is this?* header to find the source code repositories of all of them. I am only the creator of this dockerfile.
