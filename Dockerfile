@@ -56,5 +56,5 @@ RUN ls /root/ && \
 
 WORKDIR /root/
 
-RUN sbcl
+CMD sbcl
 
