@@ -1,20 +1,18 @@
-FROM archlinux:base-devel
+FROM ubuntu:bionic
 LABEL maintainer="bthaleproductions@gmail.com"
 
-# Consider also making a branch of my install-cm-incudine.sh script to be used in the Dockerfile with what I need. Comment out the parts I don't need.
-
-# Variables to be used in the script
+# Variables the dockerfile needs
+ENV DEBIAN_FRONTEND=noninteractive
 ENV QUICKLISP_DIR=/root/quicklisp/local-projects
-# Where the .sbclrc file is.
 ENV SBCLRC_LOCATION=/root/.sbclrc
 
-# Initialize the key and update
-RUN pacman-key --init && \
-    pacman -Syu --noconfirm
+# Update apt
+RUN apt update -y
 # Install dependencies
-RUN pacman -S git sbcl jack2 realtime-privileges portaudio portmidi libsndfile fftw gsl clthreads pd lilypond --noconfirm
+RUN apt-get install -yq git sbcl jack rtkit libportaudio2 libportaudiocpp0 portaudio19-dev libportmidi-dev libportmidi0 libsndfile1 libsndfile1-dev libfftw3-dev libfftw3-3 gsl-bin libgsl-dbg libgsl-dev libclthreads2 libclthreads-dev pd lilypond lilypond-data curl
 
 WORKDIR /root/
+
 ## Everything below is taken from install-cm-incudine
 # Install quicklisp and get it working
 RUN pwd && \
@@ -27,7 +25,6 @@ RUN pwd && \
 
 # Get incudine installed
 RUN git clone git://git.code.sf.net/p/incudine/incudine $QUICKLISP_DIR/incudine && \
-    #sbcl --quit --eval '(ql:quickload "incudine")'
     cat /root/.sbclrc && \
     sbcl --quit --eval '(ql::without-prompting (ql:quickload "incudine"))' && \
     cp -v /root/install-cm-incudine/incudinerc ~/.incudinerc
@@ -60,3 +57,4 @@ RUN ls /root/ && \
 WORKDIR /root/
 
 RUN sbcl
+
